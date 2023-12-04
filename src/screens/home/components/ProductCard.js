@@ -2,78 +2,54 @@ import { View, Text, Image } from "react-native";
 import { StyleSheet } from "react-native";
 import heart from "../../../assets/heart.png";
 import busket from "../../../assets/busket.png";
+import COLORS from "../../../components/colors";
 
-const ProductCard = ({ data }) => {
-    return (
-        <>
-            {data.map(
-                ({ id, title, img, oldPrice, price, isNew, description }) => {
-                    return (
-                        <View key={id} style={styles.productCard}>
-                            <View style={styles.imgWrapper}>
-                                <Image
-                                    style={styles.imgProduct}
-                                    source={{
-                                        uri: img,
-                                    }}
-                                />
-                                {isNew && (
-                                    <View style={styles.statusProduct}>
-                                        <Text style={styles.statusText}>
-                                            New
-                                        </Text>
-                                    </View>
-                                )}
-                            </View>
-                            <View style={styles.infoProduct}>
-                                <Text style={styles.titleProduct}>{title}</Text>
-                                <View style={styles.wrapperPrices}>
-                                    <Text style={styles.newPrice}>
-                                        {price} uah
-                                    </Text>
-                                    <Text style={styles.oldPrice}>
-                                        {oldPrice} uah
-                                    </Text>
-                                </View>
-                                <Text
-                                    style={styles.descriptionProduct}
-                                    numberOfLines={1}
-                                >
-                                    {description}
-                                </Text>
-                            </View>
-                            <View style={styles.optionsCard}>
-                                <View style={styles.wrapperHeartImg}>
-                                    <Image
-                                        style={styles.heartImg}
-                                        source={heart}
-                                    />
-                                </View>
-                                <View style={styles.wrapperBusketImg}>
-                                    <Text style={styles.textBuy}>Buy</Text>
-                                    <Image
-                                        style={styles.busketImg}
-                                        source={busket}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    );
-                }
+const ProductCard = ({ title, img, oldPrice, price, isNew, description }) => (
+    <View style={styles.productCard}>
+        <View style={styles.imgWrapper}>
+            <Image
+                style={styles.imgProduct}
+                source={{
+                    uri: img,
+                }}
+            />
+            {isNew && (
+                <View style={styles.statusProduct}>
+                    <Text style={styles.statusText}>New</Text>
+                </View>
             )}
-        </>
-    );
-};
+        </View>
+        <View style={styles.infoProduct}>
+            <Text style={styles.titleProduct}>{title}</Text>
+            <View style={styles.wrapperPrices}>
+                <Text style={styles.newPrice}>{price} uah</Text>
+                <Text style={styles.oldPrice}>{oldPrice} uah</Text>
+            </View>
+            <Text style={styles.descriptionProduct} numberOfLines={1}>
+                {description}
+            </Text>
+        </View>
+        <View style={styles.optionsCard}>
+            <View style={styles.wrapperHeartImg}>
+                <Image style={styles.heartImg} source={heart} />
+            </View>
+            <View style={styles.wrapperBusketImg}>
+                <Text style={styles.textBuy}>Buy</Text>
+                <Image style={styles.busketImg} source={busket} />
+            </View>
+        </View>
+    </View>
+);
 
 const styles = StyleSheet.create({
     productCard: {
-        width: "90%",
-        backgroundColor: "grey",
+        width: "100%",
+        backgroundColor: COLORS.productCardBg,
         flexDirection: "row",
         padding: 30,
         columnGap: 20,
         marginBottom: 15,
-        shadowColor: "grey",
+        shadowColor: COLORS.grey,
         shadowOffset: {
             width: 5,
             height: 5,
@@ -116,7 +92,7 @@ const styles = StyleSheet.create({
 
     wrapperPrices: {
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "space-around",
         columnGap: 10,
     },
 
