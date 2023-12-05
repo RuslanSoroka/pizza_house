@@ -49,15 +49,16 @@ const styles = StyleSheet.create({
         padding: 30,
         columnGap: 20,
         marginBottom: 15,
-        shadowColor: COLORS.grey,
+        shadowColor: COLORS.lightGrey,
         shadowOffset: {
             width: 5,
             height: 5,
         },
-        shadowOpacity: 0.7,
+        shadowOpacity: 0.8,
         shadowRadius: 5,
 
         elevation: 8,
+        borderRadius: 10,
     },
 
     imgProduct: {
@@ -70,13 +71,13 @@ const styles = StyleSheet.create({
         right: -15,
         top: -15,
         padding: 5,
-        borderColor: "white",
+        borderColor: COLORS.white,
         borderWidth: 3,
         borderRadius: 100,
     },
 
     statusText: {
-        color: "white",
+        color: COLORS.white,
         fontSize: 20,
     },
 

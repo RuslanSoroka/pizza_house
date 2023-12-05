@@ -3,6 +3,7 @@ import CustomPressable from "../../../components/CustomPressable";
 import heartImg from "../../../assets/heart.png";
 import searchingImg from "../../../assets/search.png";
 import { useState } from "react";
+import COLORS from "../../../components/colors";
 
 const Header = ({ inputValue, setInputValue, setModalVisible }) => {
     const [inputVisibility, setInputVisibility] = useState(false);
@@ -55,10 +56,10 @@ const styles = StyleSheet.create({
     },
 
     searchField: {
-        backgroundColor: "#C8D0D0",
+        backgroundColor: COLORS.lightGrey,
         borderRadius: 9,
         padding: 10,
-        shadowColor: "#000",
+        shadowColor: COLORS.defaultShadowIos,
         shadowOffset: {
             width: 0,
             height: 2,
