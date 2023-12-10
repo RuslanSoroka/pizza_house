@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: COLORS.productCardBg,
         flexDirection: "row",
-        padding: 30,
+        padding: 15,
         columnGap: 20,
         marginBottom: 15,
         shadowColor: COLORS.lightGrey,
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     imgProduct: {
         width: 100,
         height: 100,
+        borderRadius: 5,
     },
 
     statusProduct: {
