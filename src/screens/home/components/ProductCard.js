@@ -1,5 +1,6 @@
 import { View, Text, Image } from "react-native";
 import { StyleSheet } from "react-native";
+import { memo } from "react";
 import heart from "../../../assets/heart.png";
 import busket from "../../../assets/busket.png";
 import COLORS from "../../../components/colors";
@@ -101,10 +102,12 @@ const styles = StyleSheet.create({
     newPrice: {
         fontSize: 15,
         fontWeight: "700",
+        color: COLORS.green,
     },
 
     oldPrice: {
         textDecorationLine: "line-through",
+        color: COLORS.orange,
     },
 
     optionsCard: {
@@ -132,4 +135,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProductCard;
+export default memo(ProductCard);
