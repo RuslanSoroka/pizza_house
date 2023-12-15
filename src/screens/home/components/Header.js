@@ -5,7 +5,7 @@ import searchingImg from "../../../assets/search.png";
 import { useState } from "react";
 import COLORS from "../../../components/colors";
 
-const Header = ({ inputValue, setInputValue, setModalVisible }) => {
+const Header = ({ inputValue, setInputValue, onShowPage }) => {
     const [inputVisibility, setInputVisibility] = useState(false);
 
     const toggleSearchFild = () => {
@@ -14,10 +14,6 @@ const Header = ({ inputValue, setInputValue, setModalVisible }) => {
 
     const onChangeText = (value) => {
         setInputValue(value);
-    };
-
-    const showModal = () => {
-        setModalVisible(true);
     };
 
     return (
@@ -33,7 +29,7 @@ const Header = ({ inputValue, setInputValue, setModalVisible }) => {
             <View style={styles.headerButtonsWrapper}>
                 <CustomPressable
                     style={[styles.button, styles.buttonOpen]}
-                    onPress={showModal}
+                    onPress={onShowPage}
                 >
                     <Image style={styles.headerImg} source={heartImg} />
                 </CustomPressable>

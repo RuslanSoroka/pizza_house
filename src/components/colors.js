@@ -7,6 +7,9 @@ const COLORS = {
     backgroundMain: "#C7F3FA",
     grey: "grey",
     white: "white",
+    black: "black",
+    green: "green",
+    orange: "orange",
 };
 
 export default COLORS;

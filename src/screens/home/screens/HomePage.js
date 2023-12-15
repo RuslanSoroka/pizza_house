@@ -1,10 +1,9 @@
 import { StyleSheet, View, FlatList, Text, Modal } from "react-native";
-import React, { useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import Header from "../components/Header";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import COLORS from "../../../components/colors";
-import SaleModal from "../components/SaleModal";
+import CustomPressable from "../../../components/CustomPressable";
 
 let arr = [
     {
@@ -107,9 +106,8 @@ const mocSaleProduct = [
     },
 ];
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
     const [inputValue, setInputValue] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [mocProduct, setMocProduct] = useState(arr);
 
@@ -121,7 +119,7 @@ const HomePage = () => {
         price: 170,
         isNew: true,
         description:
-            "Margherita pizza is known for its ingredients representing the colours of the Italian flag. These ingredients include red tomato sauce, white mozzarella and fresh green basil. When all of these delicious flavours are combined on a hand-kneaded pizza base, a universally-adored pizza is created.",
+            "Margherita pizza is known for its ingredients representing the colours of the Italian flag. These ingredients include red tomato sauce, white mozzarella and fresh green basil. When all of these delicious flavours are combined on a hand-kneaded pizza base, a universally-adored pizza is created.Margherita pizza is known for its ingredients representing the colours of the Italian flag. These ingredients include red tomato sauce, white mozzarella and fresh green basil. When all of these delicious flavours are combined on a hand-kneaded pizza base, a universally-adored pizza is created.",
     };
 
     const filtered = mocProduct?.filter((product) =>
@@ -138,31 +136,39 @@ const HomePage = () => {
         }, 3000);
     };
 
+    const showPizza = (product) => {
+        const selectedPizza = mocProduct.find((id) => id === product);
+        navigation.navigate("Pizza", { data: selectedPizza });
+    };
+
+    const showSalePage = useCallback(
+        () => navigation.navigate("Sale", { data: mocSaleProduct }),
+        []
+    );
+
     return (
         <View style={styles.container}>
             <Header
                 inputValue={inputValue}
                 setInputValue={setInputValue}
-                setModalVisible={setModalVisible}
+                onShowPage={showSalePage}
             />
-            <SaleModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                mocSale={mocSaleProduct}
-            />
+            {/* <SaleModal mocSale={mocSaleProduct} /> */}
 
             <View style={styles.productCardWpapper}>
                 <FlatList
                     data={filtered}
                     renderItem={({ item }) => (
-                        <ProductCard
-                            title={item.title}
-                            img={item.img}
-                            oldPrice={item.oldPrice}
-                            price={item.price}
-                            isNew={item.isNew}
-                            description={item.description}
-                        />
+                        <CustomPressable onPress={() => showPizza(item)}>
+                            <ProductCard
+                                title={item.title}
+                                img={item.img}
+                                oldPrice={item.oldPrice}
+                                price={item.price}
+                                isNew={item.isNew}
+                                description={item.description}
+                            />
+                        </CustomPressable>
                     )}
                     keyExtractor={(item) => item.id}
                     onRefresh={() => updateMocProduct(mocProduct)}
@@ -188,4 +194,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomePage;
+export default memo(HomePage);
