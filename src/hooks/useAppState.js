@@ -12,7 +12,7 @@ const useAppStateListener = () => {
         };
 
         const subscription = AppState.addEventListener(
-            "blur",
+            "change",
             handleAppStateChange
         );
 
@@ -21,7 +21,7 @@ const useAppStateListener = () => {
         };
     }, []);
 
-    return { appState: appStateVisible };
+    return appStateVisible;
 };
 
 export default useAppStateListener;

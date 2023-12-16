@@ -1,11 +1,11 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Navigator from "./src/navigation";
-import useAppStateListener from "./src/utils/hooks";
+import useAppStateListener from "./src/hooks/useAppState";
 import { Dimensions, Image } from "react-native";
 const { width, height } = Dimensions.get("screen");
 
 export default function App() {
-    const { appState } = useAppStateListener();
+    const appState = useAppStateListener();
 
     return (
         <>
@@ -21,8 +21,9 @@ export default function App() {
                             height: height,
                         }}
                         source={{
-                            uri: "https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg",
+                            uri: "https://futureofbeinghuman.asu.edu/wp-content/uploads/2023/01/Pizza-and-a-slice-of-future-3.png",
                         }}
+                        resizeMode="cover"
                     />
                 </View>
             )}
