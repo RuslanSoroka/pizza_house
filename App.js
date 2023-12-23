@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import Navigator from "./src/navigation";
 import useAppStateListener from "./src/hooks/useAppState";
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Image, StyleSheet } from "react-native";
 const { width, height } = Dimensions.get("screen");
 
 export default function App() {
@@ -10,16 +10,9 @@ export default function App() {
     return (
         <>
             {appState !== "active" && (
-                <View
-                    style={{
-                        flex: 2000,
-                    }}
-                >
+                <View style={styles.appState}>
                     <Image
-                        style={{
-                            width: width,
-                            height: height,
-                        }}
+                        style={styles.stateImage}
                         source={{
                             uri: "https://futureofbeinghuman.asu.edu/wp-content/uploads/2023/01/Pizza-and-a-slice-of-future-3.png",
                         }}
@@ -31,3 +24,13 @@ export default function App() {
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    appState: {
+        flex: 2000,
+    },
+    stateImage: {
+        width: width,
+        height: height,
+    },
+});

@@ -1,15 +1,9 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    Dimensions,
-    Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import COLORS from "../../../components/colors";
 import heart from "../../../assets/heart.png";
-import CustomPressable from "../../../components/CustomPressable";
 import { ScrollView } from "react-native";
+import OrderingSection from "../../../components/OrderingSection";
+import onSetOrder from "./onSelectedOrder";
 
 const SelectedProductCard = ({ title, img, price, description }) => {
     return (
@@ -31,15 +25,10 @@ const SelectedProductCard = ({ title, img, price, description }) => {
                     <Text style={styles.descriptionProduct}>{description}</Text>
                 </ScrollView>
             </View>
-            <View style={styles.orderSection}>
-                <View style={styles.priceBox}>
-                    <Text style={styles.textPrice}>Prise:</Text>
-                    <Text style={styles.price}>{price} uah</Text>
-                </View>
-                <CustomPressable style={styles.btnBuy}>
-                    <Text style={styles.textBuy}>Buy</Text>
-                </CustomPressable>
-            </View>
+            <OrderingSection
+                price={price}
+                onAction={() => onSetOrder(title, img, price)}
+            />
         </View>
     );
 };
@@ -54,10 +43,6 @@ const styles = StyleSheet.create({
         height: "100%",
         paddingHorizontal: 5,
         backgroundColor: COLORS.productCardBg,
-    },
-
-    imgWrapper: {
-        backgroundColor: "red",
     },
 
     imgProduct: {
@@ -86,6 +71,7 @@ const styles = StyleSheet.create({
     titleProduct: {
         fontWeight: "700",
         fontSize: 20,
+        color: COLORS.orange,
     },
 
     heartImg: {
@@ -102,33 +88,33 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
 
-    orderSection: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginVertical: 10,
-    },
+    // orderSection: {
+    //     flexDirection: "row",
+    //     justifyContent: "space-between",
+    //     marginVertical: 10,
+    // },
 
-    textPrice: {
-        fontSize: 15,
-    },
+    // textPrice: {
+    //     fontSize: 15,
+    // },
 
-    price: {
-        fontSize: 20,
-        fontWeight: "700",
-        color: COLORS.green,
-    },
+    // price: {
+    //     fontSize: 20,
+    //     fontWeight: "700",
+    //     color: COLORS.green,
+    // },
 
-    btnBuy: {
-        backgroundColor: COLORS.green,
-        padding: 10,
-        width: "30%",
-        borderRadius: 30,
-        alignSelf: "center",
-    },
+    // btnBuy: {
+    //     backgroundColor: COLORS.green,
+    //     padding: 10,
+    //     width: "30%",
+    //     borderRadius: 30,
+    //     alignSelf: "center",
+    // },
 
-    textBuy: {
-        color: COLORS.white,
-        fontSize: 20,
-        textAlign: "center",
-    },
+    // textBuy: {
+    //     color: COLORS.white,
+    //     fontSize: 20,
+    //     textAlign: "center",
+    // },
 });
