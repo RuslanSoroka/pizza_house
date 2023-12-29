@@ -110,7 +110,6 @@ const HomePage = ({ navigation }) => {
     const [inputValue, setInputValue] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     const [mocProduct, setMocProduct] = useState(arr);
-
     const overDataProduct = {
         id: 10,
         title: "Kebab",

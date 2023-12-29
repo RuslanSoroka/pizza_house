@@ -5,7 +5,12 @@ import HomePage from "../screens/home/screens/HomePage";
 import PizzaPage from "../screens/home/screens/PizzaPage";
 import SaleModal from "../screens/home/components/SaleModal";
 import SettingPage from "../screens/settingsScreen/components/screens/SettingPage";
-import { ImageTabHome, ImageTabSettings } from "../components/TabsIcons";
+import {
+    ImageTabHome,
+    ImageTabSettings,
+    ImageTabBasket,
+} from "../components/TabsIcons";
+import BasketPage from "../screens/busket/screens/BasketPage";
 import { memo } from "react";
 
 const HomeStack = () => {
@@ -45,6 +50,21 @@ const SettingStack = () => {
     );
 };
 
+const BasketStack = () => {
+    const BasketStack = createNativeStackNavigator();
+    return (
+        <BasketStack.Navigator>
+            <BasketStack.Screen
+                name="BasketScreen"
+                component={BasketPage}
+                options={{
+                    title: "Basket",
+                }}
+            />
+        </BasketStack.Navigator>
+    );
+};
+
 const Tabs = () => {
     const Tab = createBottomTabNavigator();
     return (
@@ -65,6 +85,13 @@ const Tabs = () => {
                 component={SettingPage}
                 options={{
                     tabBarIcon: ImageTabSettings,
+                }}
+            />
+            <Tab.Screen
+                name="Basket"
+                component={BasketStack}
+                options={{
+                    tabBarIcon: () => <ImageTabBasket />,
                 }}
             />
         </Tab.Navigator>

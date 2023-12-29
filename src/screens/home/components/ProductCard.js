@@ -4,43 +4,50 @@ import { memo } from "react";
 import heart from "../../../assets/heart.png";
 import busket from "../../../assets/busket.png";
 import COLORS from "../../../components/colors";
+import CustomPressable from "../../../components/CustomPressable";
+import { observer } from "mobx-react";
+import onSetOrder from "./onSelectedOrder";
 
-const ProductCard = ({ title, img, oldPrice, price, isNew, description }) => (
-    <View style={styles.productCard}>
-        <View style={styles.imgWrapper}>
-            <Image
-                style={styles.imgProduct}
-                source={{
-                    uri: img,
-                }}
-            />
-            {isNew && (
-                <View style={styles.statusProduct}>
-                    <Text style={styles.statusText}>New</Text>
+const ProductCard = ({ title, img, oldPrice, price, isNew, description }) => {
+    return (
+        <View style={styles.productCard}>
+            <View style={styles.imgWrapper}>
+                <Image
+                    style={styles.imgProduct}
+                    source={{
+                        uri: img,
+                    }}
+                />
+                {isNew && (
+                    <View style={styles.statusProduct}>
+                        <Text style={styles.statusText}>New</Text>
+                    </View>
+                )}
+            </View>
+            <View style={styles.infoProduct}>
+                <Text style={styles.titleProduct}>{title}</Text>
+                <View style={styles.wrapperPrices}>
+                    <Text style={styles.newPrice}>{price} uah</Text>
+                    <Text style={styles.oldPrice}>{oldPrice} uah</Text>
                 </View>
-            )}
-        </View>
-        <View style={styles.infoProduct}>
-            <Text style={styles.titleProduct}>{title}</Text>
-            <View style={styles.wrapperPrices}>
-                <Text style={styles.newPrice}>{price} uah</Text>
-                <Text style={styles.oldPrice}>{oldPrice} uah</Text>
+                <Text style={styles.descriptionProduct} numberOfLines={1}>
+                    {description}
+                </Text>
             </View>
-            <Text style={styles.descriptionProduct} numberOfLines={1}>
-                {description}
-            </Text>
-        </View>
-        <View style={styles.optionsCard}>
-            <View style={styles.wrapperHeartImg}>
-                <Image style={styles.heartImg} source={heart} />
-            </View>
-            <View style={styles.wrapperBusketImg}>
-                <Text style={styles.textBuy}>Buy</Text>
-                <Image style={styles.busketImg} source={busket} />
+            <View style={styles.optionsCard}>
+                <View style={styles.wrapperHeartImg}>
+                    <Image style={styles.heartImg} source={heart} />
+                </View>
+                <CustomPressable onPress={() => onSetOrder(title, img, price)}>
+                    <View style={styles.wrapperBusketImg}>
+                        <Text style={styles.textBuy}>Buy</Text>
+                        <Image style={styles.busketImg} source={busket} />
+                    </View>
+                </CustomPressable>
             </View>
         </View>
-    </View>
-);
+    );
+};
 
 const styles = StyleSheet.create({
     productCard: {
@@ -91,6 +98,7 @@ const styles = StyleSheet.create({
     titleProduct: {
         fontWeight: "700",
         fontSize: 20,
+        color: COLORS.orange,
     },
 
     wrapperPrices: {
@@ -135,4 +143,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default memo(ProductCard);
+export default observer(ProductCard);
