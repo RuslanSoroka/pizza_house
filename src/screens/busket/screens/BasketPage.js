@@ -56,7 +56,7 @@ const BasketPage = ({ navigation }) => {
             <View style={styles.orderSectionWrapper}>
                 <OrderingSection
                     onAction={letBuy}
-                    price={orderStore.totalPrice + orderStore.totalAmount}
+                    price={orderStore.totalAmount}
                     text="Amount:"
                     textButton="Buy"
                 />

@@ -9,23 +9,24 @@ import {
 class OrderStore {
     @observable orders;
     @observable id;
-    @observable indexOf;
 
     constructor() {
         this.orders = [];
         this.id = "";
-        this.indexOf = null;
         makeObservable(this);
     }
 
     @action setOrders(orderItem) {
-        this.orders = [...this.orders, orderItem];
+        this.orders = this.orders?.filter(
+            (item) => item.title !== orderItem.title
+        );
+        this.orders.push(orderItem);
     }
 
-    @action setAmount(sum, id) {
+    @action setQuantity(quantity, id) {
         this.orders.forEach((item) => {
             if (item.id === id) {
-                item.amount = sum;
+                item.amount = quantity;
             }
         });
     }
@@ -40,15 +41,9 @@ class OrderStore {
         ));
     }
 
-    @computed get totalPrice() {
-        return this.orders
-            .map((item) => item.price)
-            ?.reduce((amount, digit) => amount + digit, 0);
-    }
-
     @computed get totalAmount() {
         return this.orders
-            .map((item) => item.amount)
+            .map((item) => item.price * item.amount)
             ?.reduce((amount, digit) => amount + digit, 0);
     }
 

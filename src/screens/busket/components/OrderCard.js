@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import COLORS from "../../../components/colors";
 import CustomPressable from "../../../components/CustomPressable";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { INCREASE, DECREASE } from "../reducer/actionTypes";
 import { increase, decrease } from "../reducer/actions";
 import orderStore from "../../home/store/Order";
@@ -22,19 +22,19 @@ const OrderCard = ({ title, img, price, id, onDelete }) => {
                 state;
         }
     };
-
     const [quantiti, dispatch] = useReducer(reducer, initialQuantiti);
 
-    const newPrice = price * quantiti.count;
+    useEffect(() => {
+        orderStore.setQuantity(quantiti.count, id);
+    }, [quantiti]);
 
-    const addQuantitiProduct = (newPrice, id) => {
+    const newPrice = price * quantiti.count;
+    const addQuantitiProduct = () => {
         dispatch(increase());
-        orderStore.setAmount(newPrice, id);
     };
 
-    const removeQuantitiProduct = (newPrice, id) => {
+    const removeQuantitiProduct = () => {
         dispatch(decrease());
-        orderStore.setAmount(newPrice - price * 2, id);
     };
 
     return (
@@ -46,9 +46,7 @@ const OrderCard = ({ title, img, price, id, onDelete }) => {
                 <View style={styles.quantitiProductSection}>
                     <CustomPressable
                         onPress={
-                            quantiti.count <= 1
-                                ? null
-                                : () => removeQuantitiProduct(newPrice, id)
+                            quantiti.count <= 1 ? null : removeQuantitiProduct
                         }
                     >
                         <Text style={styles.minus}>-</Text>
@@ -58,9 +56,7 @@ const OrderCard = ({ title, img, price, id, onDelete }) => {
                             ? (quantiti.count = 1)
                             : quantiti.count}
                     </Text>
-                    <CustomPressable
-                        onPress={() => addQuantitiProduct(newPrice, id)}
-                    >
+                    <CustomPressable onPress={addQuantitiProduct}>
                         <Text style={styles.plus}>+</Text>
                     </CustomPressable>
                 </View>

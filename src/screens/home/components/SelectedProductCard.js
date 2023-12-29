@@ -5,33 +5,31 @@ import { ScrollView } from "react-native";
 import OrderingSection from "../../../components/OrderingSection";
 import onSetOrder from "./onSelectedOrder";
 
-const SelectedProductCard = ({ title, img, price, description }) => {
-    return (
-        <View style={styles.selectedProduct}>
-            <View style={styles.imgWrapper}>
-                <Image
-                    style={styles.imgProduct}
-                    source={{
-                        uri: img,
-                    }}
-                />
-            </View>
-            <View style={styles.infoProduct}>
-                <View style={styles.topLine}>
-                    <Text style={styles.titleProduct}>{title}</Text>
-                    <Image style={styles.heartImg} source={heart} />
-                </View>
-                <ScrollView style={styles.descriptionBox}>
-                    <Text style={styles.descriptionProduct}>{description}</Text>
-                </ScrollView>
-            </View>
-            <OrderingSection
-                price={price}
-                onAction={() => onSetOrder(title, img, price)}
+const SelectedProductCard = ({ title, img, price, description }) => (
+    <View style={styles.selectedProduct}>
+        <View style={styles.imgWrapper}>
+            <Image
+                style={styles.imgProduct}
+                source={{
+                    uri: img,
+                }}
             />
         </View>
-    );
-};
+        <View style={styles.infoProduct}>
+            <View style={styles.topLine}>
+                <Text style={styles.titleProduct}>{title}</Text>
+                <Image style={styles.heartImg} source={heart} />
+            </View>
+            <ScrollView style={styles.descriptionBox}>
+                <Text style={styles.descriptionProduct}>{description}</Text>
+            </ScrollView>
+        </View>
+        <OrderingSection
+            price={price}
+            onAction={() => onSetOrder(title, img, price)}
+        />
+    </View>
+);
 
 export default SelectedProductCard;
 
