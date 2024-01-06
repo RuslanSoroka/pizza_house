@@ -3,7 +3,7 @@ import COLORS from "../../../components/colors";
 import heart from "../../../assets/heart.png";
 import { ScrollView } from "react-native";
 import OrderingSection from "../../../components/OrderingSection";
-import onSetOrder from "./onSelectedOrder";
+import onSetOrder from "../../../components/onSelectedOrder";
 
 const SelectedProductCard = ({ title, img, price, description }) => (
     <View style={styles.selectedProduct}>
