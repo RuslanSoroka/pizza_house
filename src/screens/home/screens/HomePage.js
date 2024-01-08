@@ -4,6 +4,14 @@ import Header from "../components/Header";
 import { memo, useCallback, useState } from "react";
 import COLORS from "../../../components/colors";
 import CustomPressable from "../../../components/CustomPressable";
+import {
+    useSharedValue,
+    useAnimatedScrollHandler,
+    useAnimatedStyle,
+    interpolate,
+    Extrapolation,
+} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 let arr = [
     {
@@ -110,6 +118,7 @@ const HomePage = ({ navigation }) => {
     const [inputValue, setInputValue] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     const [mocProduct, setMocProduct] = useState(arr);
+    const [headerHeight, setHeaderHeight] = useState(0);
     const overDataProduct = {
         id: 10,
         title: "Kebab",
@@ -145,17 +154,39 @@ const HomePage = ({ navigation }) => {
         []
     );
 
+    const scrollY = useSharedValue(0);
+    const scrollHandler = useAnimatedScrollHandler(
+        (event) => (scrollY.value = event.contentOffset.y)
+    );
+
+    const animatedStylesProductField = useAnimatedStyle(() => {
+        return {
+            position: "relative",
+            top: interpolate(
+                scrollY.value,
+                [0, 50],
+                [headerHeight, 0],
+                Extrapolation.CLAMP
+            ),
+        };
+    });
+
     return (
         <View style={styles.container}>
             <Header
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 onShowPage={showSalePage}
+                scroll={scrollY}
+                setHeaderHeight={setHeaderHeight}
+                headerHeight={headerHeight}
             />
-            {/* <SaleModal mocSale={mocSaleProduct} /> */}
 
-            <View style={styles.productCardWpapper}>
-                <FlatList
+            <Animated.View
+                style={[styles.productCardWpapper, animatedStylesProductField]}
+            >
+                <Animated.FlatList
+                    onScroll={scrollHandler}
                     data={filtered}
                     renderItem={({ item }) => (
                         <CustomPressable onPress={() => showPizza(item)}>
@@ -173,7 +204,7 @@ const HomePage = ({ navigation }) => {
                     onRefresh={() => updateMocProduct(mocProduct)}
                     refreshing={refreshing}
                 />
-            </View>
+            </Animated.View>
         </View>
     );
 };
@@ -187,9 +218,8 @@ const styles = StyleSheet.create({
     },
 
     productCardWpapper: {
-        marginTop: 20,
-        paddingBottom: 60,
         width: "90%",
+        flex: 1,
     },
 });
 

@@ -1,6 +1,6 @@
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import orderStore from "../store/Order";
+import orderStore from "../screens/home/store/Order";
 
 const onSetOrder = (title, img, price) => {
     const selectedOrder = {

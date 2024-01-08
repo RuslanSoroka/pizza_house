@@ -6,7 +6,7 @@ import busket from "../../../assets/busket.png";
 import COLORS from "../../../components/colors";
 import CustomPressable from "../../../components/CustomPressable";
 import { observer } from "mobx-react";
-import onSetOrder from "./onSelectedOrder";
+import onSetOrder from "../../../components/onSelectedOrder.js";
 
 const ProductCard = ({ title, img, oldPrice, price, isNew, description }) => {
     return (

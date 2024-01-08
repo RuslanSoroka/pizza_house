@@ -2,10 +2,25 @@ import { TextInput, View, Image, StyleSheet } from "react-native";
 import CustomPressable from "../../../components/CustomPressable";
 import heartImg from "../../../assets/heart.png";
 import searchingImg from "../../../assets/search.png";
-import { useState } from "react";
+import { useState, memo } from "react";
 import COLORS from "../../../components/colors";
+import {
+    StretchInX,
+    StretchOutY,
+    useAnimatedStyle,
+    interpolate,
+    Extrapolation,
+} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
-const Header = ({ inputValue, setInputValue, onShowPage }) => {
+const Header = ({
+    inputValue,
+    setInputValue,
+    onShowPage,
+    scroll,
+    setHeaderHeight,
+    headerHeight,
+}) => {
     const [inputVisibility, setInputVisibility] = useState(false);
 
     const toggleSearchFild = () => {
@@ -15,16 +30,47 @@ const Header = ({ inputValue, setInputValue, onShowPage }) => {
     const onChangeText = (value) => {
         setInputValue(value);
     };
+    const getHeightHeader = (event) => {
+        const height = event.nativeEvent.layout.height;
+        setHeaderHeight(height);
+    };
+
+    const animatedStylesHeader = useAnimatedStyle(() => {
+        return {
+            position: "absolute",
+            opacity: interpolate(
+                scroll.value,
+                [0, 50],
+                [1, 0.0],
+                Extrapolation.CLAMP
+            ),
+            top: interpolate(
+                scroll.value,
+                [0, 50],
+                [0, -headerHeight],
+                Extrapolation.CLAMP
+            ),
+        };
+    });
 
     return (
-        <View style={styles.header}>
+        <Animated.View
+            style={[styles.header, animatedStylesHeader]}
+            onLayout={getHeightHeader}
+        >
             {inputVisibility && (
-                <TextInput
-                    style={styles.searchField}
-                    placeholder="Search..."
-                    onChangeText={onChangeText}
-                    value={inputValue}
-                />
+                <Animated.View
+                    style={styles.animatedBox}
+                    entering={StretchInX}
+                    exiting={StretchOutY}
+                >
+                    <TextInput
+                        style={styles.searchField}
+                        placeholder="Search..."
+                        onChangeText={onChangeText}
+                        value={inputValue}
+                    />
+                </Animated.View>
             )}
             <View style={styles.headerButtonsWrapper}>
                 <CustomPressable
@@ -37,7 +83,7 @@ const Header = ({ inputValue, setInputValue, onShowPage }) => {
                     <Image style={styles.headerImg} source={searchingImg} />
                 </CustomPressable>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 
@@ -47,8 +93,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-end",
-        marginVertical: 10,
-        minHeight: 37,
+        paddingVertical: 15,
+        position: "relative",
+    },
+
+    animatedBox: {
+        flexGrow: 1,
     },
 
     searchField: {
@@ -80,4 +130,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Header;
+export default memo(Header);
